@@ -61,7 +61,7 @@ guessSubmit.addEventListener('click',checkGuess); // Event listener waits for bu
 function setGameOver(){
   guessField.disabled = true; //  disables the text input 
   guessSubmit.disabled = true; //  disabeles the submit button
-  resetButton.style.display = ''; // display reset button 
+  resetButton.style.display = 'inline'; // display reset button 
   resetButton.addEventListener('click',resetGame); // event listener for reset game. 
  
 }
