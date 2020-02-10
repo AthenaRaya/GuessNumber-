@@ -1,6 +1,14 @@
 
+
+
+
 var randomNumber  = Math.floor(Math.random() * 99) + 1; // global var generationg a random number between 1 and 99.99
 
+var gamesWon  = 0;
+var gamesLost = 0;
+
+
+var games= document.querySelector('#games');
 var guesses = document.querySelector('#guesses');
 var lastResult = document.querySelector('#lastResult');
 var lowOrHi = document.querySelector('#lowOrHi');
@@ -12,8 +20,9 @@ var guessCount = 1;
 var resetButton = document.querySelector('#reset')
 resetButton.style.display = 'none';
 
+var resetButton;
 guessField.focus();
-var resetButton; 
+
 
 //************functions**************
 
@@ -22,16 +31,24 @@ function checkGuess(){ // submit guesses in pressed
   if(guessCount ===1){
     guesses.innerHTML = 'Previous guesses: ';
   }
+  
   guesses.innerHTML += userGuess + ' ';
+    
     
     if(userGuess === randomNumber){ // Next, determine if the number is correct ( If so, display a congratulations message. If not, display if the number is too high or too low
       lastResult.innerHTML = 'Congratulations! You got it right!';
       lastResult.style.backgroundColor = 'green';
       lowOrHi.innerHTML= '';
       setGameOver();
+      
+      gamesWon = gamesWon + 1
+      games.innerHTML = 'gameswon:' +gamesWon +'  gameslost:'+ gamesLost; 
+      
       }else if(guessCount === 7) { 
         lastResult.innerHTML = 'Sorry, you lost!';
         setGameOver(); 
+        gamesLost= gamesLost+ 1;
+                    games.innerHTML = 'games Won:' +gamesWon +'  games Lost:'+ gamesLost;
       }else{
         lastResult.innerHTML ='wrong!';
         lastResult.style.backgroundColor ='red';
@@ -61,7 +78,7 @@ guessSubmit.addEventListener('click',checkGuess); // Event listener waits for bu
 function setGameOver(){
   guessField.disabled = true; //  disables the text input 
   guessSubmit.disabled = true; //  disabeles the submit button
-  resetButton.style.display = ''; // display reset button 
+  resetButton.style.display = 'inline'; // display reset button 
   resetButton.addEventListener('click',resetGame); // event listener for reset game. 
  
 }
@@ -70,11 +87,13 @@ function setGameOver(){
 function resetGame() {
  
   guessCount = 1; //guessCount back down to 1
-  console.log("resetGame function")
+  
   var resetParas = document.querySelectorAll('.resultParas p'); // reset text content to blank
   for(var i = 0; i < resetParas.length; i++){
     resetParas[i].textContent = '';
    }
+   
+   
   resetButton.style.display = 'none'; // Hides the reset button
   
   guessField.disabled = 'false'; // Enables the form elements, and empties and focuses the text field
